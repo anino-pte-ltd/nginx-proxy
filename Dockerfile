@@ -1,5 +1,7 @@
-FROM nginx:1.9.15
-MAINTAINER Jason Wilder mail@jasonwilder.com
+FROM quay.io/playlab/nginx:1.11.1
+
+MAINTAINER Jason Wilder mail@jasonwilder.com # Original maintainer
+MAINTAINER Sebastian Sasu <sebastian.s@pocketplaylab.com> # This Fork's maintainer
 
 # Install wget and install/updates certificates
 RUN apt-get update \
@@ -11,7 +13,8 @@ RUN apt-get update \
 
 # Configure Nginx and apply fix for very long server names
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf \
- && sed -i 's/^http {/&\n    server_names_hash_bucket_size 128;/g' /etc/nginx/nginx.conf
+ && sed -i 's/^http {/&\n    server_names_hash_bucket_size 128;/g;s/worker_processes  1;/worker_processes auto;/g;s/#gzip  on;/gzip  on;/g;s/access_log  \/var\/log\/nginx\/access.log  main;/access_log  off;/g;s/^http {/&\n    tcp_nodelay on;/g;s/#tcp_nopush     on;/tcp_nopush     on;/g;s/^http {/&\n    server_tokens off;/g;s/^http {/&\n    client_body_buffer_size 2m;/g;s/^http {/&\n    client_max_body_size 50m;/g' /etc/nginx/nginx.conf
+
 
 # Install Forego
 ADD https://github.com/jwilder/forego/releases/download/v0.16.1/forego /usr/local/bin/forego
