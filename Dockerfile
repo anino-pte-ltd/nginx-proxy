@@ -1,4 +1,4 @@
-FROM quay.io/playlab/nginx:1.11.1
+FROM quay.io/playlab/nginx:1.11.3
 
 MAINTAINER Jason Wilder mail@jasonwilder.com # Original maintainer
 MAINTAINER Sebastian Sasu <sebastian.s@pocketplaylab.com> # This Fork's maintainer
