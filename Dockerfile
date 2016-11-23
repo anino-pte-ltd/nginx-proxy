@@ -1,4 +1,4 @@
-FROM quay.io/playlab/nginx:1.11.3
+FROM quay.io/playlab/nginx:1.11.6
 
 MAINTAINER Jason Wilder mail@jasonwilder.com # Original maintainer
 MAINTAINER Sebastian Sasu <sebastian.s@pocketplaylab.com> # This Fork's maintainer
@@ -19,6 +19,9 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf \
 # Install Forego
 ADD https://github.com/jwilder/forego/releases/download/v0.16.1/forego /usr/local/bin/forego
 RUN chmod u+x /usr/local/bin/forego
+
+# Add proxy parameters
+COPY proxy.conf /etc/nginx/proxy.conf
 
 ENV DOCKER_GEN_VERSION 0.7.3
 
